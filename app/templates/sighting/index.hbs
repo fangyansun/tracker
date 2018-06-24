@@ -1,0 +1,24 @@
+<h1>Sighting details:
+<small>
+{{model.sighting.location}} -
+{{moment-from model.sighting.sightedAt}}
+</small>
+</h1>
+<div class="container text-center">
+  <img class="img-rounded" src="../../{{model.sighting.cryptid.profileImg}}" alt="{{model.type}}">
+  <h3>{{model.sighting.cryptid.name}}</h3>
+</div>
+
+<form {{action "update" model on="submit"}}>
+  <div class="form-group">
+    <label>Witnesses</label>
+    {{#each model.sighting.witnesses as |witness|}}
+      {{input value=witness.fullName type="text" class="form-control"
+name="location" required=true}}
+    {{/each}}
+  </div>
+  <div class="form-group">
+    <label for="location">Location</label> {{input value=model.sighting.location type="text" class="form-control"
+name="location" required=true}}
+  </div>
+</form>
