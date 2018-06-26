@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 import {hash} from 'rsvp';
+import {alias} from '@ember/object/computed';
 
 export default Route.extend({
   model() {
@@ -9,7 +10,7 @@ export default Route.extend({
       witnesses: this.store.findAll('witness')
     });
   },
-  sighting: Ember.computed.alias('controller.model.sighting'),
+  sighting: alias('controller.model.sighting'),
   actions: {
     willTransition() {
       var sighting = this.get('controller.model.sighting');
@@ -20,6 +21,7 @@ export default Route.extend({
     create() {
       var self = this;
       this.get('sighting').save().then(function() {
+        self.send('flash', {alertType: "success", message: "New sighting."});
         self.transitionTo('sightings');
       });
     },
